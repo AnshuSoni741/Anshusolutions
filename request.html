@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TANISHKA SOLUSIONS – Request a Service</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body data-page="request">
+<nav>
+  <div class="container navbar">
+    <a class="brand" href="index.html">
+      <img src="assets/logo.svg" alt="logo"><span class="name">TANISHKA SOLUSIONS</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="providers.html">Provider Registration</a>
+      <a href="request.html">Request Service</a>
+      <a class="btn" href="tel:+910000000000">Call Now</a>
+    </div>
+  </div>
+</nav>
+
+<main class="container page">
+  <h1>Request a Service</h1>
+  <p class="subtitle">Tell us what you need. We’ll assign a verified expert and confirm shortly.</p>
+
+  <div id="status"></div>
+  <form id="requestForm" class="form">
+    <div class="form-grid">
+      <div>
+        <label>Full Name *</label>
+        <input name="name" placeholder="Your full name">
+      </div>
+      <div>
+        <label>Mobile Number *</label>
+        <input name="phone" placeholder="+91 XXXXX XXXXX">
+      </div>
+      <div>
+        <label>Email</label>
+        <input type="email" name="email" placeholder="name@email.com">
+      </div>
+      <div>
+        <label>City *</label>
+        <input name="city" placeholder="Your city">
+      </div>
+      <div>
+        <label>Address</label>
+        <input name="address" placeholder="House no, area, landmark">
+      </div>
+      <div>
+        <label>Service Type *</label>
+        <select name="serviceType"></select>
+      </div>
+      <div>
+        <label>Preferred Date</label>
+        <input type="date" name="preferredDate">
+      </div>
+      <div>
+        <label>Preferred Time</label>
+        <input type="time" name="preferredTime">
+      </div>
+      <div style="grid-column:1/-1">
+        <label>Describe the issue / work</label>
+        <textarea name="description" placeholder="Tell us about the problem or job details"></textarea>
+      </div>
+      <div>
+        <label>Urgency</label>
+        <select name="urgency">
+          <option>Normal</option>
+          <option>Urgent (within 6 hours)</option>
+          <option>Emergency (ASAP)</option>
+        </select>
+      </div>
+      <div>
+        <label>Budget (₹)</label>
+        <input type="number" name="budget" min="0" step="500" placeholder="Approximate budget">
+      </div>
+    </div>
+    <div class="hero-actions" style="margin-top:10px">
+      <button type="submit" class="btn">Submit Request</button>
+      <a class="btn secondary" href="index.html">Back to Home</a>
+    </div>
+  </form>
+
+  <section class="section">
+    <h2>Recent Requests</h2>
+    <table class="table">
+      <thead><tr><th>ID</th><th>Name</th><th>Service</th><th>City</th><th>Date</th><th>Phone</th></tr></thead>
+      <tbody id="list"></tbody>
+    </table>
+  </section>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
