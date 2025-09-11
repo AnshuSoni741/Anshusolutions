@@ -26,9 +26,20 @@ nav{
 .navbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:12px}
 .brand{display:flex;align-items:center;gap:10px;}
 
-@media (max-width:668px) {
+
+@media (max-width:643px) {
   .brand{display:flex;align-items:flex-start;gap:8px; flex-direction: column; font-size: 8px;}
 }
+
+@media (max-width:629px) {
+  .brand{display:flex;align-items:flex-start;gap:8px; flex-direction: column; font-size: 8px;}
+  .brand .name{display: none;}
+}
+
+@media (max-width:495px) {
+  .brand img{src:"assets/Alogo.png"}
+}
+
 .brand img{height:34px}
 .brand .name{font-weight:800;letter-spacing:0.6px;font-family:emoji;}
 .nav-links{display:flex;gap:18px;align-items:center}
