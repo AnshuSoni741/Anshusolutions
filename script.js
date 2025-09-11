@@ -3,12 +3,12 @@
 const SERVICES = [
   { key: 'electricity', name: 'Electrical Wiring & Repair', img: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1600&auto=format&fit=crop', desc: 'House wiring, earthing, meter board, short-circuit fix, new installations.' },
   { key: 'construction', name: 'Civil & Construction', img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=1600&auto=format&fit=crop', desc: 'Masonry, concrete, tiling, plaster, site supervision and renovation.' },
-  { key: 'ac', name: 'AC Installation & Repair', img: 'https://images.unsplash.com/photo-1595432541891-b3d11ccd8141?q=80&w=1600&auto=format&fit=crop', desc: 'Split/Window AC install, gas refill, servicing and noise/ice issues.' },
+  { key: 'ac', name: 'AC Installation & Repair', img: 'https://plus.unsplash.com/premium_photo-1682126012378-859ca7a9f4cf?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', desc: 'Split/Window AC install, gas refill, servicing and noise/ice issues.' },
   { key: 'cooler', name: 'Air Cooler Repair', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1600&auto=format&fit=crop', desc: 'Pump, motor, pad change, wiring and seasonal service.' },
   { key: 'plumbing', name: 'Plumbing', img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1600&auto=format&fit=crop', desc: 'Leak fix, pipeline, taps, geyser fitting and bathroom renovation.' },
   { key: 'carpentry', name: 'Carpentry', img: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1600&auto=format&fit=crop', desc: 'Door/window fitting, modular work, furniture repair.' },
   { key: 'painting', name: 'Painting & POP', img: 'https://images.unsplash.com/photo-1480796927426-f609979314bd?q=80&w=1600&auto=format&fit=crop', desc: 'Interior/exterior painting, putty, texture and POP designs.' },
-  { key: 'cctv', name: 'CCTV & Security', img: 'https://images.unsplash.com/photo-1508087625439-de3978963555?q=80&w=1600&auto=format&fit=crop', desc: 'CCTV installation, DVR setup, intercom and access control.' },
+  { key: 'cctv', name: 'CCTV & Security', img: 'https://images.unsplash.com/photo-1566060475410-1159300f046f?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', desc: 'CCTV installation, DVR setup, intercom and access control.' },
   { key: 'solar', name: 'Solar Panel Setup', img: 'https://images.unsplash.com/photo-1509395176047-4a66953fd231?q=80&w=1600&auto=format&fit=crop', desc: 'Rooftop solar, inverter, net metering and maintenance.' },
   { key: 'it', name: 'IT & Networking', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop', desc: 'WiFi setup, LAN cabling, computer repair and software install.' },
   { key: 'fabrication', name: 'Metal Fabrication & Welding', img: 'https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=1600&auto=format&fit=crop', desc: 'Grills, gates, frames and on-site welding solutions.' },
@@ -20,6 +20,7 @@ const ROLES = [
   'Mechanical Engineer','Supervisor','Painter','Welder','Fabricator','CCTV Technician','Solar Technician',
   'Roofer','Gardener','IT Support','Network Engineer'
 ];
+
 
 // ======== Helpers ========
 const $ = (sel, root=document) => root.querySelector(sel);
@@ -128,6 +129,7 @@ function initRequest(){
     $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#R${String(id).padStart(4,'0')}</b>. Our team will reach out shortly.</div>`;
     form.reset();
   });
+
   // Show recent requests
   const rows = DB.all('requests').slice(-5).reverse().map((r,i)=>`
     <tr>
