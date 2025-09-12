@@ -86,12 +86,12 @@ function initHome(){
   //logo image resposiveness
     function updateImageSrc() {
     const img = document.querySelector('#brim');
-    // if (screen.width <= 495) {
-    //   img.src = 'assets/Alogo.png';
-    // }
-    // else{
-    //   img.src = 'assets/anshu.png';
-    // }
+    if (screen.width <= 495) {
+      img.src = 'Alogo.png';
+    }
+    else{
+      img.src = 'anshu.png';
+    }
     }
 
   // Run on page load and window resize
