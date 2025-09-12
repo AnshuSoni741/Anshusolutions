@@ -80,6 +80,22 @@ function initHome(){
     {lbl:'Avg. Response (min)', num: 30},
   ];
   $('.kpis').innerHTML = kpis.map(k=>`<div class="kpi"><div class="num">${k.num}+</div><div class="lbl">${k.lbl}</div></div>`).join('');
+
+
+//following is to change logo image with mobile
+  //logo image resposiveness
+    function updateImageSrc() {
+    const img = document.querySelector('#brim');
+    if (screen.width <= 495) {
+      img.src = 'assets/Alogo.png';
+    }else{
+      img.src = 'assets/anshu.png';
+    }
+  }
+  // Run on page load and window resize
+  window.addEventListener('load', updateImageSrc);
+  window.addEventListener('resize', updateImageSrc);
+
 }
 
 function initProvider(){
@@ -110,6 +126,7 @@ function initProvider(){
     </tr>
   `).join('');
   $('#list').innerHTML = rows || '<tr><td colspan="6">No registrations yet.</td></tr>';
+
 }
 
 function initRequest(){
@@ -143,10 +160,11 @@ function initRequest(){
   `).join('');
   $('#list').innerHTML = rows || '<tr><td colspan="6">No requests yet.</td></tr>';
 }
-
 // Page router
 document.addEventListener('DOMContentLoaded', () => {
   if(document.body.dataset.page === 'home') initHome();
   if(document.body.dataset.page === 'provider') initProvider();
   if(document.body.dataset.page === 'request') initRequest();
 });
+
+
