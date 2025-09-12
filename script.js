@@ -1,5 +1,5 @@
 
-// ======== Data =======
+// ======== Data ========
 const SERVICES = [
   { key: 'electricity', name: 'Electrical Wiring & Repair', img: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1600&auto=format&fit=crop', desc: 'House wiring, earthing, meter board, short-circuit fix, new installations.' },
   { key: 'construction', name: 'Civil & Construction', img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=1600&auto=format&fit=crop', desc: 'Masonry, concrete, tiling, plaster, site supervision and renovation.' },
@@ -86,12 +86,14 @@ function initHome(){
   //logo image resposiveness
     function updateImageSrc() {
     const img = document.querySelector('#brim');
-    if (screen.width <= 495) {
-      img.src = 'assets/Alogo.png';
-    }else{
-      img.src = 'assets/anshu.png';
+    // if (screen.width <= 495) {
+    //   img.src = 'assets/Alogo.png';
+    // }
+    // else{
+    //   img.src = 'assets/anshu.png';
+    // }
     }
-  }
+
   // Run on page load and window resize
   window.addEventListener('load', updateImageSrc);
   window.addEventListener('resize', updateImageSrc);
