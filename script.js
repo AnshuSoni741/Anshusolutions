@@ -1,5 +1,5 @@
 
-// ======== Data ========
+// ======== Data =======
 const SERVICES = [
   { key: 'electricity', name: 'Electrical Wiring & Repair', img: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1600&auto=format&fit=crop', desc: 'House wiring, earthing, meter board, short-circuit fix, new installations.' },
   { key: 'construction', name: 'Civil & Construction', img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=1600&auto=format&fit=crop', desc: 'Masonry, concrete, tiling, plaster, site supervision and renovation.' },
