@@ -11,8 +11,9 @@
 <nav>
   <div class="container navbar">
     <a class="brand" href="index.html">
-      <img src="anshu.png" alt="Anshu Solutions logo">
+      <img id="brim" src="assets/anshu.png" alt="Anshu Solutions logo">
       <span class="name">ANSHU SOLUTIONS</span>
+      <!-- <input type="button" onclick ="change()"/> -->
     </a>
     <div class="nav-links">
       <a href="index.html">Home</a>
@@ -65,7 +66,7 @@
   <div class="container footer-grid">
     <div>
       <div class="brand" style="margin-bottom:10px">
-        <img src="anshusolusion.png" alt="" style="height:28px"><span class="name">ANSHU SOLUTIONS</span>
+        <img src="assets/anshusolusion.png" alt="" style="height:28px"><span class="name">ANSHU SOLUTIONS</span>
       </div>
       <p class="subtitle">Reliable multi-service provider for homes, offices and industries.</p>
     </div>
@@ -89,7 +90,21 @@
   <div class="container" style="margin-top:18px;color:#6b7280">© <span id="yr"></span> ANSHU SOLUTIONS</div>
 </footer>
 
-<script src="script.js"></script>
-<script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+
+
+<script src="script.js">
+</script>
+<script>document.getElementById('yr').textContent = new Date().getFullYear();
+
+//following function is not working constantly
+  //  function change(){
+  //   console.log("heloo");
+  //   console.log("naaaaaaa");
+  //   let imgg = document.querySelector('#brim');
+  //   imgg.src = 'assets/Alogo.png';
+  //   let hg = document.querySelector(".name");
+  //   hg.textContent = "helooo";
+  // }
+</script>
 </body>
 </html>
