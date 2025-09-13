@@ -87,13 +87,11 @@ function initHome(){
     function updateImageSrc() {
     const img = document.querySelector('#brim');
     if (screen.width <= 495) {
-      img.src = 'Alogo.png';
+      img.src = 'assets/Alogo.png';
+    }else{
+      img.src = 'assets/anshu.png';
     }
-    else{
-      img.src = 'anshu.png';
-    }
-    }
-
+  }
   // Run on page load and window resize
   window.addEventListener('load', updateImageSrc);
   window.addEventListener('resize', updateImageSrc);
@@ -136,18 +134,20 @@ function initRequest(){
   const preselect = qsParam('service');
   if(preselect){ $('select[name=serviceType]').value = preselect; }
   const form = $('#requestForm');
-  form.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(form).entries());
-    if(!data.name || !data.phone || !data.serviceType || !data.city){
-      alert('Please fill Name, Phone, City and Service Type.');
-      return;
-    }
-    data.createdAt = new Date().toISOString();
-    const id = DB.save('requests', data);
-    $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#R${String(id).padStart(4,'0')}</b>. Our team will reach out shortly.</div>`;
-    form.reset();
-  });
+  // form.addEventListener('submit', (e)=>{
+  //   e.preventDefault();
+  //   const data = Object.fromEntries(new FormData(form).entries());
+  //   if(!data.name || !data.phone || !data.serviceType || !data.city){
+  //     alert('Please fill Name, Phone, City and Service Type.');
+  //     return;
+  //   }
+  //   data.createdAt = new Date().toISOString();
+  //   const id = DB.save('requests', data);
+  //   $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#R${String(id).padStart(4,'0')}</b>. Our team will reach out shortly.</div>`;
+  //   form.reset();
+
+  // });
+  data_uploader_setting();
 
   // Show recent requests
   const rows = DB.all('requests').slice(-5).reverse().map((r,i)=>`
@@ -161,7 +161,70 @@ function initRequest(){
     </tr>
   `).join('');
   $('#list').innerHTML = rows || '<tr><td colspan="6">No requests yet.</td></tr>';
+
 }
+
+
+
+// ======================request form entry to google sheet======================
+
+function data_uploader_setting(){
+   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwk0m5Y80gP6LBnLPGMwSxIIQcWEG0Iw0-932INthUsurZX5i4ALRLv_yWsDxu_i2E3/exec";
+
+    const requestForm = document.getElementById("requestForm");
+    const statusDiv = document.getElementById("status");
+
+    requestForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusDiv.textContent = "Sending...";
+      statusDiv.className = "status";
+      const name = document.querySelector("#name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const serviceType = document.getElementById("serviceType").value.trim();
+      const prefer_date = document.getElementById("preferredDate").value.trim();
+      const prefer_time = document.getElementById("preferredTime").value.trim();
+      const description = document.getElementById("description").value.trim();
+      const urgency = document.getElementById("urgency").value.trim();
+      const budget = document.getElementById("budget").value.trim();
+
+      if (!name || !phone || !city || !address || !serviceType || !prefer_date || !prefer_time || !description || !urgency || !budget) {
+        statusDiv.textContent = "Please fill in all fields.";
+        statusDiv.classList.add("error");
+        return;
+      }
+
+      console.log(phone,city);
+
+      try {
+        const response = await fetch(WEB_APP_URL, {
+          method: "POST",
+          // headers: {
+          //   "Content-Type": "application/json"
+          // },
+          body: JSON.stringify({name,phone,city,address,serviceType,prefer_date,prefer_time,description,urgency,budget })
+        });
+        const result = await response.json();
+        if (result.status === "success") {
+          statusDiv.textContent = "Submitted successfully. Thank you!";
+          statusDiv.classList.add("success");
+          requestForm.reset();
+        } else {
+          statusDiv.textContent = "Error: " + (result.message || "Something went wrong");
+          statusDiv.classList.add("error");
+        }
+      } catch (err) {
+        statusDiv.textContent = "Network error: " + err.toString();
+        statusDiv.classList.add("error");
+      }
+    });
+}
+
+//end of google entry
+
+
+
 // Page router
 document.addEventListener('DOMContentLoaded', () => {
   if(document.body.dataset.page === 'home') initHome();
