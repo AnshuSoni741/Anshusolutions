@@ -8,12 +8,9 @@
 </head>
 <body data-page="request">
 <nav>
-  <div class="mhead">
-    <img src="anshu.png" alt="Anshu Solutions logo" width="100%">
-  </div> 
   <div class="container navbar">
      <a class="brand" href="index.html">
-      <img id="brim" src="anshu.png" alt="Anshu Solutions logo">
+      <img id="brim" src="assets/anshu.png" alt="Anshu Solutions logo">
       <span class="name">ANSHU SOLUTIONS</span>
       <!-- <input type="button" onclick ="change()"/> -->
     </a>
@@ -35,43 +32,43 @@
     <div class="form-grid">
       <div>
         <label>Full Name *</label>
-        <input name="name" placeholder="Your full name">
+        <input name="name" id="name" placeholder="Your full name">
       </div>
       <div>
         <label>Mobile Number *</label>
-        <input name="phone" placeholder="+91 XXXXX XXXXX">
+        <input name="phone" id="phone" placeholder="+91 XXXXX XXXXX">
       </div>
       <div>
         <label>Email</label>
-        <input type="email" name="email" placeholder="name@email.com">
+        <input type="email" id="email" name="email" placeholder="name@email.com">
       </div>
       <div>
         <label>City *</label>
-        <input name="city" placeholder="Your city">
+        <input name="city" id="city" placeholder="Your city">
       </div>
       <div>
         <label>Address</label>
-        <input name="address" placeholder="House no, area, landmark">
+        <input name="address" id="address" placeholder="House no, area, landmark">
       </div>
       <div>
         <label>Service Type *</label>
-        <select name="serviceType"></select>
+        <select name="serviceType" id="serviceType"></select>
       </div>
       <div>
         <label>Preferred Date</label>
-        <input type="date" name="preferredDate">
+        <input type="date"  name="preferredDate" id="preferredDate">
       </div>
       <div>
         <label>Preferred Time</label>
-        <input type="time" name="preferredTime">
+        <input type="time" name="preferredTime" id="preferredTime">
       </div>
       <div style="grid-column:1/-1">
         <label>Describe the issue / work</label>
-        <textarea name="description" placeholder="Tell us about the problem or job details"></textarea>
+        <textarea name="description" id="description" placeholder="Tell us about the problem or job details"></textarea>
       </div>
       <div>
         <label>Urgency</label>
-        <select name="urgency">
+        <select name="urgency" id="urgency">
           <option>Normal</option>
           <option>Urgent (within 6 hours)</option>
           <option>Emergency (ASAP)</option>
@@ -79,13 +76,14 @@
       </div>
       <div>
         <label>Budget (₹)</label>
-        <input type="number" name="budget" min="0" step="500" placeholder="Approximate budget">
+        <input type="number" name="budget" id="budget" min="0" step="500" placeholder="Approximate budget">
       </div>
     </div>
     <div class="hero-actions" style="margin-top:10px">
       <button type="submit" class="btn">Submit Request</button>
       <a class="btn secondary" href="index.html">Back to Home</a>
     </div>
+    <div class="status"></div>
   </form>
 
   <section class="section">
