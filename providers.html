@@ -8,9 +8,6 @@
 </head>
 <body data-page="provider">
 <nav>
-  <div class="mhead">
-    <img src="anshu.png" alt="Anshu Solutions logo" width="100%">
-  </div> 
   <div class="container navbar">
     <a class="brand" href="index.html">
       <img id="brim" src="anshu.png" alt="Anshu Solutions logo">
@@ -35,47 +32,47 @@
     <div class="form-grid">
       <div>
         <label>Full Name *</label>
-        <input name="name" placeholder="Your full name">
+        <input name="name" id="name" placeholder="Your full name">
       </div>
       <div>
         <label>Mobile Number *</label>
-        <input name="phone" placeholder="+91 XXXXX XXXXX">
+        <input name="phone" id="phone" placeholder="+91 XXXXX XXXXX">
       </div>
       <div>
         <label>Email</label>
-        <input type="email" name="email" placeholder="name@email.com">
+        <input type="email" id="email" placeholder="name@email.com">
       </div>
       <div>
         <label>Select Role *</label>
-        <select name="role"></select>
+        <select name="role" id="role"></select>
       </div>
       <div>
         <label>Primary Service</label>
-        <select name="primaryService"></select>
+        <select name="primaryService" id="primaryService"></select>
       </div>
       <div>
         <label>Experience (years)</label>
-        <input type="number" name="experience" min="0" step="1" placeholder="e.g., 5">
+        <input type="number" name="experience" id="experience" min="0" step="1" placeholder="e.g., 5">
       </div>
       <div>
         <label>City *</label>
-        <input name="city" placeholder="Your city">
+        <input name="city" id="city" placeholder="Your city">
       </div>
       <div>
         <label>Service Areas</label>
-        <input name="areas" placeholder="e.g., Kanpur, Lucknow, Unnao">
+        <input name="areas" id="areas" placeholder="e.g., Kanpur, Lucknow, Unnao">
       </div>
       <div>
         <label>ID Proof (optional)</label>
-        <input type="file" name="idProof" accept=".jpg,.jpeg,.png,.pdf">
+        <input type="file" name="idProof" id="idProof" accept=".jpg,.jpeg,.png,.pdf">
         <div class="help">Uploading is optional in this demo; file is not sent to a server.</div>
       </div>
       <div>
         <label>About / Skills</label>
-        <textarea name="skills" placeholder="Key skills, certifications, tools..."></textarea>
+        <textarea name="skills" id="skills" placeholder="Key skills, certifications, tools..."></textarea>
       </div>
     </div>
-    <label><input type="checkbox" name="agree"> I confirm that the information provided is true and I agree to be contacted.</label>
+    <label><input type="checkbox" value= "yes I accepts" name="agree" id="agree"> I confirm that the information provided is true and I agree to be contacted.</label>
     <div class="hero-actions" style="margin-top:10px">
       <button type="submit" class="btn">Submit Registration</button>
       <a class="btn secondary" href="index.html">Back to Home</a>
