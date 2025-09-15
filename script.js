@@ -102,18 +102,22 @@ function initProvider(){
   fillRoleOptions();
   fillServiceOptions('select[name=primaryService]');
   const form = $('#providerForm');
-  form.addEventListener('submit', (e)=>{
-    e.preventDefault();
-    const data = Object.fromEntries(new FormData(form).entries());
-    if(!data.name || !data.phone || !data.role){
-      alert('Please fill Name, Phone and Role.');
-      return;
-    }
-    data.createdAt = new Date().toISOString();
-    const id = DB.save('providers', data);
-    $('#status').innerHTML = `<div class="notice">Thank you! Your Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
-    form.reset();
-  });
+  // form.addEventListener('submit', (e)=>{
+  //   e.preventDefault();
+  //   const data = Object.fromEntries(new FormData(form).entries());
+  //   if(!data.name || !data.phone || !data.role){
+  //     alert('Please fill Name, Phone and Role.');
+  //     return;
+  //   }
+  //   data.createdAt = new Date().toISOString();
+  //   const id = DB.save('providers', data);
+  //   $('#status').innerHTML = `<div class="notice">Thank you! Your Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
+  //   form.reset();
+  // });
+  data_uploader_setting_for_provider_form();
+  // https://script.google.com/macros/s/AKfycbzpFkssmDSqSLygbo5AR9bOQp2Zx2EQq5XvCJ4b-qek6_AwRfMeB3IleQOT2zOE7y5Gsg/exec
+
+
   // Show recent providers
   const rows = DB.all('providers').slice(-5).reverse().map((p,i)=>`
     <tr>
@@ -128,6 +132,75 @@ function initProvider(){
   $('#list').innerHTML = rows || '<tr><td colspan="6">No registrations yet.</td></tr>';
 
 }
+
+
+
+// ======================service provider form entry to google sheet====================== 
+function data_uploader_setting_for_provider_form(){
+   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzpFkssmDSqSLygbo5AR9bOQp2Zx2EQq5XvCJ4b-qek6_AwRfMeB3IleQOT2zOE7y5Gsg/exec";
+
+    const providerForm = document.getElementById("providerForm");
+    const statusDiv = document.getElementById("status");
+
+    providerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      statusDiv.textContent = "Sending...";
+      statusDiv.className = "status";
+      const data = Object.fromEntries(new FormData(providerForm).entries());
+      const name = document.querySelector("#name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const role = document.getElementById("role").value.trim();
+      const primaryService = document.getElementById("primaryService").value.trim();
+      const experience = document.getElementById("experience").value.trim();
+      const city = document.getElementById("city").value.trim();
+      const areas = document.getElementById("areas").value.trim();
+      // const idproof = document.getElementById("idproof").value.trim();
+      const idproof = "adhar card";
+      const skills = document.getElementById("skills").value.trim();
+      const agree = document.getElementById("agree").value.trim();
+
+      // if (!data.name | !data.phone | !data.email | !data.role | !data.primaryService | !data.experience | !data.city | !data.areas| !data.idproof | !data.skills | !data.agree) {
+      //   statusDiv.textContent = "Please fill in all fields.";
+      //   statusDiv.classList.add("error");
+      //   return;
+      // }
+
+      // check
+      console.log(data.name,data.city);
+
+
+      
+      try {
+        const response = await fetch(WEB_APP_URL, {
+          method: "POST",
+          // headers: {
+            //   "Content-Type": "application/json"
+            // },
+            body: JSON.stringify({name,phone,email,role,primaryService,experience,city,areas,idproof,skills,agree})
+          });
+          const result = await response.json();
+          if (result.status === "success") {
+            statusDiv.textContent = "Submitted successfully. Thank you!";
+            statusDiv.classList.add("success");
+            providerForm.reset();
+          } else {
+            statusDiv.textContent = "Error: " + (result.message || "Something went wrong");
+            statusDiv.classList.add("error");
+          }
+        } catch (err) {
+          statusDiv.textContent = "Network error: " + err.toString();
+          statusDiv.classList.add("error");
+        }
+        data.createdAt = new Date().toISOString();
+        const id = DB.save('providers', data);
+        $('#status').innerHTML = `<div class="notice">Thank you! Your Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
+      });
+}
+// ======================this end serviceprovider form entry to google sheet=================================================
+
+
+
 
 function initRequest(){
   fillServiceOptions();
@@ -147,7 +220,7 @@ function initRequest(){
   //   form.reset();
 
   // });
-  data_uploader_setting();
+  data_uploader_setting_for_request_form();
 
   // Show recent requests
   const rows = DB.all('requests').slice(-5).reverse().map((r,i)=>`
@@ -168,7 +241,7 @@ function initRequest(){
 
 // ======================request form entry to google sheet======================
 
-function data_uploader_setting(){
+function data_uploader_setting_for_request_form(){
    const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwk0m5Y80gP6LBnLPGMwSxIIQcWEG0Iw0-932INthUsurZX5i4ALRLv_yWsDxu_i2E3/exec";
 
     const requestForm = document.getElementById("requestForm");
