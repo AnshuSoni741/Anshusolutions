@@ -251,6 +251,7 @@ function data_uploader_setting_for_request_form(){
       e.preventDefault();
       statusDiv.textContent = "Sending...";
       statusDiv.className = "status";
+      const data = Object.fromEntries(new FormData(requestForm).entries());
       const name = document.querySelector("#name").value.trim();
       const phone = document.getElementById("phone").value.trim();
       const city = document.getElementById("city").value.trim();
