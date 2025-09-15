@@ -292,6 +292,10 @@ function data_uploader_setting_for_request_form(){
         statusDiv.textContent = "Network error: " + err.toString();
         statusDiv.classList.add("error");
       }
+      data.createdAt = new Date().toISOString();
+      const id = DB.save('requests', data);
+      $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#R${String(id).padStart(4,'0')}</b>. Our team will reach out shortly.</div>`;
+      
     });
 }
 
