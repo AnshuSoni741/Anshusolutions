@@ -198,7 +198,7 @@ function data_uploader_setting_for_provider_form(){
         
            //to get message through what app
         // Format the WhatsApp message
-        let text = `I want to register with anshusolutions with following details:\n\nName: ${name}\nPhone: ${phone}\n Email: ${email}\nRole: ${role}\nPrimary service: ${primaryService}\n Experience (year): ${experience} ,\ncity ${city} \n Working Area: ${areas}\n skills : ${skills}`;
+        let text = `I want to register with anshusolutions with following details:\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nRole: ${role}\nPrimary service: ${primaryService}\nExperience (year): ${experience} ,\ncity ${city} \nWorking Area: ${areas}\nskills : ${skills}`;
 
       // Encode message for URL
         let encodedText = encodeURIComponent(text);
@@ -319,7 +319,7 @@ function data_uploader_setting_for_request_form(){
       
        //to get message through what app
         // Format the WhatsApp message
-      let text = `Service Order with following details:\n\nName: ${name}\nPhone: ${phone}\n city: ${city}\naddress: ${address}\nservice type: ${serviceType}\n prefer date & time: ${prefer_date} , ${prefer_time} \n work description : ${description}\n urgency : ${urgency} \n budget : ${budget} `;
+      let text = `Service Order with following details:\n\nName: ${name}\nPhone: ${phone}\ncity: ${city}\naddress: ${address}\nservice type: ${serviceType}\nprefer date & time: ${prefer_date} , ${prefer_time} \nwork description : ${description}\nurgency : ${urgency} \nbudget : ${budget} `;
 
       // Encode message for URL
       let encodedText = encodeURIComponent(text);
