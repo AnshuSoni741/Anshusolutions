@@ -194,7 +194,23 @@ function data_uploader_setting_for_provider_form(){
         }
         data.createdAt = new Date().toISOString();
         const id = DB.save('providers', data);
-        $('#status').innerHTML = `<div class="notice">Thank you! Your Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
+        $('#status').innerHTML = `<div class="notice">Thank you! Your Service Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
+        
+           //to get message through what app
+        // Format the WhatsApp message
+        let text = `I want to register with anshusolutions with following details:\n\nName: ${name}\nPhone: ${phone}\n Email: ${email}\nRole: ${role}\nPrimary service: ${primaryService}\n Experience (year): ${experience} ,\ncity ${city} \n Working Area: ${areas}\n skills : ${skills}`;
+
+      // Encode message for URL
+        let encodedText = encodeURIComponent(text);
+
+      // Replace with your WhatsApp number (with country code, e.g., 91XXXXXXXXXX)
+         let phoneNumber = 7905071414;  
+
+         let url = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+        
+      // Open WhatsApp
+      window.open(url, "_blank");
+      
       });
 }
 // ======================this end serviceprovider form entry to google sheet=================================================
@@ -221,6 +237,11 @@ function initRequest(){
 
   // });
   data_uploader_setting_for_request_form();
+
+   const targetElement = document.getElementById('status');
+            if (targetElement) {
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
 
   // Show recent requests
   const rows = DB.all('requests').slice(-5).reverse().map((r,i)=>`
@@ -292,11 +313,29 @@ function data_uploader_setting_for_request_form(){
         statusDiv.textContent = "Network error: " + err.toString();
         statusDiv.classList.add("error");
       }
-      data.createdAt = new Date().toISOString();
-      const id = DB.save('requests', data);
-      $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#R${String(id).padStart(4,'0')}</b>. Our team will reach out shortly.</div>`;
+       data.createdAt = new Date().toISOString();
+       const id = DB.save('requests', data);
+       $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#R${String(id).padStart(4,'0')}</b>. Our team will reach out shortly.</div>`;
+      
+       //to get message through what app
+        // Format the WhatsApp message
+      let text = `Service Order with following details:\n\nName: ${name}\nPhone: ${phone}\n city: ${city}\naddress: ${address}\nservice type: ${serviceType}\n prefer date & time: ${prefer_date} , ${prefer_time} \n work description : ${description}\n urgency : ${urgency} \n budget : ${budget} `;
+
+      // Encode message for URL
+      let encodedText = encodeURIComponent(text);
+
+      // Replace with your WhatsApp number (with country code, e.g., 91XXXXXXXXXX)
+      let phoneNumber = 7905071414;  
+
+      let url = `https://wa.me/${phoneNumber}?text=${encodedText}`;
+      
+      // Open WhatsApp
+      window.open(url, "_blank");
+      
+      const targetElement = document.getElementsByClassName('statusL');
       
     });
+    document.getElementsByClassName("statusL").innerText = document.getElementById("status").innerText
 }
 
 //end of google entry
