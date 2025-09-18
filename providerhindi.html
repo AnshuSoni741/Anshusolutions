@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ANSHU SOLUTIONS – Provider Registration</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .lang-btn {
+      margin-left: auto;
+      background: #f4c542;
+      border: none;
+      padding: 6px 12px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body data-page="provider">
+<nav>
+  <div class="container navbar">
+    <a class="brand" href="index.html">
+      <img id="brim" src="anshu.png" alt="Anshu Solutions logo">
+      <span class="name">ANSHU SOLUTIONS</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" data-en="Home" data-hi="होम">Home</a>
+      <a href="providers.html" data-en="Provider Registration" data-hi="प्रदाता पंजीकरण">Provider Registration</a>
+      <a href="request.html" data-en="Request Service" data-hi="सेवा का अनुरोध">Request Service</a>
+      <a class="btn" href="tel:+917905071414" data-en="Call Now" data-hi="अभी कॉल करें">Call Now</a>
+      <button id="langToggle" class="lang-btn">हिंदी</button>
+    </div>
+  </div>
+</nav>
+
+<main class="container page">
+  <h1 data-en="Register as Service Provider" data-hi="सेवा प्रदाता के रूप में पंजीकरण करें">Register as Service Provider</h1>
+  <p class="subtitle" data-en="Mistri, Technician, Engineers, Supervisors – join our verified network."
+     data-hi="मिस्त्री, तकनीशियन, इंजीनियर, पर्यवेक्षक – हमारे सत्यापित नेटवर्क से जुड़ें।">
+     Mistri, Technician, Engineers, Supervisors – join our verified network.
+  </p>
+
+  <div id="status"></div>
+  <form id="providerForm" class="form">
+    <div class="form-grid">
+      <div>
+        <label data-en="Full Name *" data-hi="पूरा नाम *">Full Name *</label>
+        <input name="name" id="name" placeholder="Your full name">
+      </div>
+      <div>
+        <label data-en="Mobile Number *" data-hi="मोबाइल नंबर *">Mobile Number *</label>
+        <input name="phone" id="phone" placeholder="+91 XXXXX XXXXX">
+      </div>
+      <div>
+        <label data-en="Email" data-hi="ईमेल">Email</label>
+        <input type="email" id="email" placeholder="name@email.com">
+      </div>
+      <div>
+        <label data-en="Select Role *" data-hi="भूमिका चुनें *">Select Role *</label>
+        <select name="role" id="role"></select>
+      </div>
+      <div>
+        <label data-en="Primary Service" data-hi="प्राथमिक सेवा">Primary Service</label>
+        <select name="primaryService" id="primaryService"></select>
+      </div>
+      <div>
+        <label data-en="Experience (years)" data-hi="अनुभव (वर्ष)">Experience (years)</label>
+        <input type="number" name="experience" id="experience" min="0" step="1" placeholder="e.g., 5">
+      </div>
+      <div>
+        <label data-en="City *" data-hi="शहर *">City *</label>
+        <input name="city" id="city" placeholder="Your city">
+      </div>
+      <div>
+        <label data-en="Service Areas" data-hi="सेवा क्षेत्र">Service Areas</label>
+        <input name="areas" id="areas" placeholder="e.g., Kanpur, Lucknow, Unnao">
+      </div>
+      <div>
+        <label data-en="ID Proof (optional)" data-hi="पहचान प्रमाण (वैकल्पिक)">ID Proof (optional)</label>
+        <input type="file" name="idProof" id="idProof" accept=".jpg,.jpeg,.png,.pdf">
+        <div class="help" data-en="Uploading is optional in this demo; file is not sent to a server."
+             data-hi="इस डेमो में अपलोड वैकल्पिक है; फ़ाइल सर्वर पर नहीं भेजी जाती।">
+             Uploading is optional in this demo; file is not sent to a server.
+        </div>
+      </div>
+      <div>
+        <label data-en="About / Skills" data-hi="परिचय / कौशल">About / Skills</label>
+        <textarea name="skills" id="skills" placeholder="Key skills, certifications, tools..."></textarea>
+      </div>
+    </div>
+    <label>
+      <input type="checkbox" value="yes I accepts" name="agree" id="agree">
+      <span data-en="I confirm that the information provided is true and I agree to be contacted."
+            data-hi="मैं पुष्टि करता हूं कि दी गई जानकारी सही है और मैं संपर्क किए जाने के लिए सहमत हूं।">
+            I confirm that the information provided is true and I agree to be contacted.
+      </span>
+    </label>
+    <div class="hero-actions" style="margin-top:10px">
+      <button type="submit" class="btn" data-en="Submit Registration" data-hi="पंजीकरण सबमिट करें">Submit Registration</button>
+      <a class="btn secondary" href="index.html" data-en="Back to Home" data-hi="होम पर वापस जाएं">Back to Home</a>
+    </div>
+    <div class="statusL"></div>
+  </form>
+
+  <section class="section">
+    <h2 data-en="Recent Registrations" data-hi="हाल के पंजीकरण">Recent Registrations</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th data-en="ID" data-hi="आईडी">ID</th>
+          <th data-en="Name" data-hi="नाम">Name</th>
+          <th data-en="Role" data-hi="भूमिका">Role</th>
+          <th data-en="Primary Service" data-hi="प्राथमिक सेवा">Primary Service</th>
+          <th data-en="City" data-hi="शहर">City</th>
+          <th data-en="Phone" data-hi="फ़ोन">Phone</th>
+        </tr>
+      </thead>
+      <tbody id="list"></tbody>
+    </table>
+  </section>
+</main>
+
+<script src="script.js"></script>
+<script>
+
+    const ROLES_H = [
+  'मिस्त्री (राजमिस्त्री)','तकनीशियन','बिजली मिस्त्री','एसी तकनीशियन','प्लंबर','बढ़ई','सिविल इंजीनियर',
+  'मैकेनिकल इंजीनियर','पर्यवेक्षक','पेंटर','वेल्डर','फैब्रिकेटर','सीसीटीवी तकनीशियन','सौर ऊर्जा तकनीशियन',
+  'छत बनाने वाला (रूफर)','माली','आईटी सहायता','नेटवर्क इंजीनियर'
+];
+
+const SERVICES_H = [
+  { key: 'electricity', name: 'विद्युत वायरिंग और मरम्मत', img: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1600&auto=format&fit=crop', desc: 'घर की वायरिंग, अर्थिंग, मीटर बोर्ड, शॉर्ट-सर्किट ठीक करना, नई इंस्टॉलेशन।' },
+  { key: 'construction', name: 'सिविल और निर्माण कार्य', img: 'https://images.unsplash.com/photo-1454496522488-7a8e488e8606?q=80&w=1600&auto=format&fit=crop', desc: 'राजमिस्त्री कार्य, कंक्रीट, टाइलिंग, प्लास्टर, साइट पर्यवेक्षण और नवीनीकरण।' },
+  { key: 'ac', name: 'एसी इंस्टॉलेशन और मरम्मत', img: 'https://plus.unsplash.com/premium_photo-1682126012378-859ca7a9f4cf?q=80&w=870&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', desc: 'स्प्लिट/विंडो एसी इंस्टॉल, गैस रिफिल, सर्विसिंग और शोर/बर्फ की समस्या।' },
+  { key: 'cooler', name: 'एयर कूलर मरम्मत', img: 'https://images.unsplash.com/photo-1548839140-29a749e1cf4d?q=80&w=1600&auto=format&fit=crop', desc: 'पंप, मोटर, पैड बदलना, वायरिंग और मौसमी सर्विस।' },
+  { key: 'plumbing', name: 'प्लंबिंग', img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?q=80&w=1600&auto=format&fit=crop', desc: 'लीकेज ठीक करना, पाइपलाइन, नल, गीजर फिटिंग और बाथरूम नवीनीकरण।' },
+  { key: 'carpentry', name: 'बढ़ई कार्य', img: 'https://images.unsplash.com/photo-1519710164239-da123dc03ef4?q=80&w=1600&auto=format&fit=crop', desc: 'दरवाज़ा/खिड़की फिटिंग, मॉड्यूलर कार्य, फर्नीचर की मरम्मत।' },
+  { key: 'painting', name: 'पेंटिंग और पीओपी', img: 'https://images.unsplash.com/photo-1480796927426-f609979314bd?q=80&w=1600&auto=format&fit=crop', desc: 'अंदर/बाहर पेंटिंग, पुट्टी, टेक्सचर और पीओपी डिजाइन।' },
+  { key: 'cctv', name: 'सीसीटीवी और सुरक्षा', img: 'https://images.unsplash.com/photo-1566060475410-1159300f046f?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', desc: 'सीसीटीवी इंस्टॉलेशन, डीवीआर सेटअप, इंटरकॉम और एक्सेस कंट्रोल।' },
+  { key: 'solar', name: 'सोलर पैनल सेटअप', img: 'https://images.unsplash.com/photo-1509395176047-4a66953fd231?q=80&w=1600&auto=format&fit=crop', desc: 'छत पर सोलर, इन्वर्टर, नेट मीटरिंग और रखरखाव।' },
+  { key: 'it', name: 'आईटी और नेटवर्किंग', img: 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1600&auto=format&fit=crop', desc: 'वाईफाई सेटअप, एलएएन केबलिंग, कंप्यूटर मरम्मत और सॉफ्टवेयर इंस्टॉल।' },
+  { key: 'fabrication', name: 'मेटल फैब्रिकेशन और वेल्डिंग', img: 'https://images.unsplash.com/photo-1531834685032-c34bf0d84c77?q=80&w=1600&auto=format&fit=crop', desc: 'ग्रिल, गेट, फ्रेम और ऑन-साइट वेल्डिंग समाधान।' },
+  { key: 'gardening', name: 'बागवानी और लैंडस्केपिंग', img: 'https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?q=80&w=1600&auto=format&fit=crop', desc: 'बगीचा सेटअप, लॉन देखभाल, ड्रिप सिंचाई और रखरखाव।' }
+];
+
+
+
+  const langBtn = document.getElementById("langToggle");
+  let currentLang = "en"; // default language
+
+
+
+function fillRoleOptions(selectSel='select[name=role]'){
+    if(currentLang == "en"){
+        const el = $(selectSel);
+        if(!el) return;
+        el.innerHTML = `<option value="">Select role</option>` + ROLES.map(r=>`<option>${r}</option>`).join('');
+    }
+    else{
+       const el = $(selectSel);
+        if(!el) return;
+        el.innerHTML = `<option value="">भूमिका चुनें</option>` + ROLES_H.map(r=>`<option>${r}</option>`).join('');
+  }
+}
+
+function fillServiceOptions(selectSel='select[name=serviceType]'){
+    if(currentLang == "en"){
+        const el = $(selectSel);
+        if(!el) return;
+         el.innerHTML = `<option value="">Select a service</option>` + SERVICES.map(s=>`<option>${s.name}</option>`).join('');
+        console.log("THIS IS ENGLISH SELECTED");
+    }
+    else{
+        const el = $(selectSel);
+        if(!el) return;
+        el.innerHTML = `<option value="">एक सेवा चुनें</option>` + SERVICES_H.map(s=>`<option>${s.name}</option>`).join('');
+        console.log("THIS IS HINDI SELECTED");
+    }
+}
+
+  function updateLanguage(lang) {
+    document.querySelectorAll("[data-en]").forEach(el => {
+      el.textContent = el.getAttribute("data-" + lang);
+    });
+    langBtn.textContent = (lang === "en") ? "हिंदी" : "English";
+    currentLang = lang;
+    fillRoleOptions();
+    fillServiceOptions('select[name=primaryService]');
+  }
+
+
+  langBtn.addEventListener("click", () => {
+    updateLanguage(currentLang === "en" ? "hi" : "en");
+  });
+
+  // set default English
+//   updateLanguage("en");
+
+
+  
+</script>
+</body>
+</html>
