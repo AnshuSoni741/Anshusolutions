@@ -1,4 +1,5 @@
 
+
 // ======== Data ========
 const SERVICES = [
   { key: 'electricity', name: 'Electrical Wiring & Repair', img: 'https://images.unsplash.com/photo-1581092921461-eab62e97a780?q=80&w=1600&auto=format&fit=crop', desc: 'House wiring, earthing, meter board, short-circuit fix, new installations.' },
@@ -20,6 +21,7 @@ const ROLES = [
   'Mechanical Engineer','Supervisor','Painter','Welder','Fabricator','CCTV Technician','Solar Technician',
   'Roofer','Gardener','IT Support','Network Engineer'
 ];
+
 
 
 // ======== Helpers ========
@@ -48,10 +50,19 @@ function fillServiceOptions(selectSel='select[name=serviceType]'){
 }
 
 function fillRoleOptions(selectSel='select[name=role]'){
-  const el = $(selectSel);
-  if(!el) return;
-  el.innerHTML = `<option value="">Select role</option>` + ROLES.map(r=>`<option>${r}</option>`).join('');
+  // if(document.getElementById("lan_o").innerText == "Full Name *"){
+    // console.log("this is english language selected")
+    const el = $(selectSel);
+    if(!el) return;
+    el.innerHTML = `<option value="">Select role</option>` + ROLES.map(r=>`<option>${r}</option>`).join('');
+  // }
+  // else{
+  //   const el = $(selectSel);
+  //   if(!el) return;
+  //   el.innerHTML = `<option value="">Select role</option>` + ROLES_H.map(r=>`<option>${r}</option>`).join('');
+  // }
 }
+
 
 function qsParam(name){
   const url = new URL(location.href);
@@ -135,9 +146,72 @@ function initProvider(){
 
 
 
+
+// ======================get latest registration number from request form and generate new reg number ===============================
+
+async function generate_new_reg_num_for_service_provider() {
+  // https://docs.google.com/spreadsheets/d/e/2PACX-1vRmVtlgMTgglSISNU2wDA6CCiQ2j1m4VaEyy92BBWDmNQMVMrSPqn_R6uxwqfBHXRy7L0bJ9ayvngX1/pubhtml?gid=0&single=true
+  
+  const sheetId = "1eyvlc9obybAnU3maZPCO4EZcELqmFP7m2k1Xx-vULSo"; // Your Sheet ID
+  const gid = "0"; // First sheet/tab
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&gid=${gid}`;
+  let new_reg_number = "0";
+
+
+  try {
+    // Using fetch with async/await
+    const res = await fetch(url);
+    const data = await res.text();
+    
+    // Remove Google’s extra characters
+    const json = JSON.parse(data.substr(47).slice(0, -2));
+    const rows = json.table.rows;
+
+    // Get the last non-empty row
+    const lastRow = rows[rows.length - 1];
+
+    // console.log("row length : "+ rows.length);
+    // console.log("row : "+ lastRow);
+
+    //below is confusing logic but now it is set and 
+    // provided that google sheet return row length less than 1 that row has in sheet but below 1 it shows same num of row
+    if (lastRow && rows.length>=1){
+      const values = lastRow.c[1].v;
+      if(rows.length==1){
+          // const pattern = /^ANS-SP-(0[1-9]|1[0-2])\d{4}-\d{4}$/;
+          const pattern = /^ANS-SP-\d{6}-\d{4}$/;
+          let pattern_matched = pattern.test(values);
+          // console.log("old reg number isss :" + values);
+                if (pattern_matched) {
+                      // console.log("patter match");
+                       new_reg_number = getNextRegistrationNumber(values);
+                      } else {
+                        // console.log("patter not matched")
+                        new_reg_number = `ANS-SP-${getCurrentYearMonth()}-0001`;
+                      }
+        }
+        else{
+          new_reg_number = getNextRegistrationNumber(values);
+        }
+      
+      // console.log("new reg number :" + new_reg_number);
+    } else {
+      // console.log("inside else part of outer check for zero row");
+      new_reg_number = `ANS-SP-${getCurrentYearMonth()}-0001`;
+    }
+  } catch (err) {
+    console.error("Error: ", err);
+    // Optional: Handle the error, e.g., fallback or display a message
+  }
+
+  return new_reg_number;  // Return after fetching the data and processing
+}
+
+
 // ======================service provider form entry to google sheet====================== 
 function data_uploader_setting_for_provider_form(){
-   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzpFkssmDSqSLygbo5AR9bOQp2Zx2EQq5XvCJ4b-qek6_AwRfMeB3IleQOT2zOE7y5Gsg/exec";
+  //const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzpFkssmDSqSLygbo5AR9bOQp2Zx2EQq5XvCJ4b-qek6_AwRfMeB3IleQOT2zOE7y5Gsg/exec";
+   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyvd5lvdpSZEeIOnCqPnrCGmDsBoN4CnJlMR-1yVlQUJ1Dh9t2mOpDc01zWdEcBHzeqjA/exec";
 
     const providerForm = document.getElementById("providerForm");
     const statusDiv = document.getElementById("status");
@@ -167,7 +241,14 @@ function data_uploader_setting_for_provider_form(){
       // }
 
       // check
-      console.log(data.name,data.city);
+      // console.log(data.name,data.city);
+
+      
+      let registration_id = await generate_new_reg_num_for_service_provider();
+      // let registration_id  ="kkj/kjj/kkj/878" ;
+
+      // console.log("new id is : "+registration_id);
+
 
 
       
@@ -177,7 +258,7 @@ function data_uploader_setting_for_provider_form(){
           // headers: {
             //   "Content-Type": "application/json"
             // },
-            body: JSON.stringify({name,phone,email,role,primaryService,experience,city,areas,idproof,skills,agree})
+            body: JSON.stringify({registration_id,name,phone,email,role,primaryService,experience,city,areas,idproof,skills,agree})
           });
           const result = await response.json();
           if (result.status === "success") {
@@ -194,11 +275,15 @@ function data_uploader_setting_for_provider_form(){
         }
         data.createdAt = new Date().toISOString();
         const id = DB.save('providers', data);
-        $('#status').innerHTML = `<div class="notice">Thank you! Your Service Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
+        // $('#status').innerHTML = `<div class="notice">Thank you! Your Service Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
+        $('#status').innerHTML = `<div class="notice">
+            Thank you for registering! Your Service Provider ID is <b>#${registration_id}</b>. 
+            Our team will contact you shortly to complete the onboarding process.
+            </div>`;
         
            //to get message through what app
         // Format the WhatsApp message
-        let text = `I want to register with anshusolutions with following details:\n\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\nRole: ${role}\nPrimary service: ${primaryService}\nExperience (year): ${experience} ,\ncity ${city} \nWorking Area: ${areas}\nskills : ${skills}`;
+        let text = `I want to register in anshusolutions with following details:\n\nregistration: ${registration_id}\nName: ${name}\nPhone: ${phone}\n Email: ${email}\nRole: ${role}\nPrimary service: ${primaryService}\n Experience (year): ${experience} ,\ncity ${city} \n Working Area: ${areas}\n skills : ${skills}`;
 
       // Encode message for URL
         let encodedText = encodeURIComponent(text);
@@ -259,12 +344,100 @@ function initRequest(){
 }
 
 
+function getCurrentYearMonth() {
+    const now = new Date(); // Current date
+    const year = now.getFullYear(); // e.g., 2025
+    const month = (now.getMonth() + 1).toString().padStart(2, '0'); // 01–12
+    return `${year}${month}`; // e.g., "202509"
+}
+
+
+// ======================get latest registration number from request form and generate new reg number ================================
+
+async function generate_new_reg_num_for_service_request() {
+  const sheetId = "19xOa5f9LAvh_TQnXU0TJ6R3_hrtE95wTa03Bc2JRCfI"; // Your Sheet ID
+  const gid = "0"; // First sheet/tab
+  const url = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&gid=${gid}`;
+
+  let new_reg_number = "0";
+
+  try {
+    // Using fetch with async/await
+    const res = await fetch(url);
+    const data = await res.text();
+    
+    // Remove Google’s extra characters
+    const json = JSON.parse(data.substr(47).slice(0, -2));
+    const rows = json.table.rows;
+
+    // Get the last non-empty row
+    const lastRow = rows[rows.length - 1];
+
+    console.log(rows.length);
+  //below is confusing logic but now it is set and 
+    // provided that google sheet return row length less than 1 that row has in sheet but below 1 it shows same num of row
+    if (lastRow && rows.length>=1){
+      const values = lastRow.c[1].v;
+      if(rows.length==1){
+          // const pattern = /^ANS-SP-(0[1-9]|1[0-2])\d{4}-\d{4}$/;
+          const pattern = /^ANS-SR-\d{6}-\d{4}$/;
+          // const pattern = /^ANS-SP-\d{6}-\d{4}$/;
+          let pattern_matched = pattern.test(values);
+          // console.log("old reg number isss :" + values);
+                if (pattern_matched) {
+                      // console.log("patter match");
+                       new_reg_number = getNextRegistrationNumber(values);
+                      } else {
+                        // console.log("patter not matched")
+                        new_reg_number = `ANS-SR-${getCurrentYearMonth()}-0001`;
+                      }
+        }
+        else{
+          new_reg_number = getNextRegistrationNumber(values);
+        }
+      
+      // console.log("new reg number :" + new_reg_number);
+    } else {
+      console.log("inside else part of outer layer");
+      new_reg_number = `ANS-SR-${getCurrentYearMonth()}-0001`;
+    }
+  } catch (err) {
+    console.error("Error: ", err);
+    // Optional: Handle the error, e.g., fallback or display a message
+  }
+
+  return new_reg_number;  // Return after fetching the data and processing
+}
+
+
+//============================= to generate new registration number========
+function getNextRegistrationNumber(currentRegNumber) {
+    // Split the registration number by '-'
+    const parts = currentRegNumber.split('-'); // ["AS", "SR", "202509", "0001"]
+
+    // Extract and increment the serial number
+    let serialNumber = parseInt(parts[3], 10); // Convert "0001" to 1
+    serialNumber += 1;
+
+    // Pad the new serial number to 4 digits
+    const newSerial = serialNumber.toString().padStart(4, '0'); // "0002"
+
+    // Build the new registration number
+    const newRegNumber = `${parts[0]}-${parts[1]}-${getCurrentYearMonth()}-${newSerial}`;
+    return newRegNumber;
+    }
+
 
 // ======================request form entry to google sheet======================
 
 function data_uploader_setting_for_request_form(){
-   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwk0m5Y80gP6LBnLPGMwSxIIQcWEG0Iw0-932INthUsurZX5i4ALRLv_yWsDxu_i2E3/exec";
+  //  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwk0m5Y80gP6LBnLPGMwSxIIQcWEG0Iw0-932INthUsurZX5i4ALRLv_yWsDxu_i2E3/exec";
+  //  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbw-lIV4ZAJ0_asBrWC-xRfg-WFOmymhZvVeetTEUY7QjybGyZBLzeU31rUC_pcts8MF/exec";
+  // const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbwzzanvZGSltAzWBvfVMvIezf0ABS95vpY8B6jdRM7mqN0RogfUrEmIAK4RlTSUISdd/exec";
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyuOKlkNcOqJn2dUbbTq0-Pj6giNuS_QCEVe0opDjWzXLAJvbwAjDK8oBL7OloFGvbg/exec";
+  
 
+  //  https://script.google.com/macros/s/AKfycbw-lIV4ZAJ0_asBrWC-xRfg-WFOmymhZvVeetTEUY7QjybGyZBLzeU31rUC_pcts8MF/exec
     const requestForm = document.getElementById("requestForm");
     const statusDiv = document.getElementById("status");
 
@@ -290,15 +463,20 @@ function data_uploader_setting_for_request_form(){
         return;
       }
 
-      console.log(phone,city);
+      // console.log(phone,city);
 
+      // let new_registartion_number = generate_new_reg_num_for_service_request();
+
+      let new_request_Id = await generate_new_reg_num_for_service_request();
+      console.log("the new reg number is :"+new_request_Id);
+      
       try {
         const response = await fetch(WEB_APP_URL, {
           method: "POST",
           // headers: {
           //   "Content-Type": "application/json"
           // },
-          body: JSON.stringify({name,phone,city,address,serviceType,prefer_date,prefer_time,description,urgency,budget })
+          body: JSON.stringify({new_request_Id,name,phone,city,address,serviceType,prefer_date,prefer_time,description,urgency,budget })
         });
         const result = await response.json();
         if (result.status === "success") {
@@ -315,11 +493,12 @@ function data_uploader_setting_for_request_form(){
       }
        data.createdAt = new Date().toISOString();
        const id = DB.save('requests', data);
-       $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#R${String(id).padStart(4,'0')}</b>. Our team will reach out shortly.</div>`;
+      //  $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#R${String(id).padStart(4,'0')}</b>. Our team will reach out shortly.</div>`;
+       $('#status').innerHTML = `<div class="notice">Request submitted! Your Request ID is <b>#${new_request_Id}</b>. Our team will reach out shortly.</div>`;
       
        //to get message through what app
         // Format the WhatsApp message
-      let text = `Service Order with following details:\n\nName: ${name}\nPhone: ${phone}\ncity: ${city}\naddress: ${address}\nservice type: ${serviceType}\nprefer date & time: ${prefer_date} , ${prefer_time} \nwork description : ${description}\nurgency : ${urgency} \nbudget : ${budget} `;
+      let text = `Service Order with following details:\n\nRequest ID: ${new_request_Id}\nName: ${name}\nPhone: ${phone}\n city: ${city}\naddress: ${address}\nservice type: ${serviceType}\n prefer date & time: ${prefer_date} , ${prefer_time} \n work description : ${description}\n urgency : ${urgency} \n budget : ${budget} `;
 
       // Encode message for URL
       let encodedText = encodeURIComponent(text);
@@ -348,5 +527,3 @@ document.addEventListener('DOMContentLoaded', () => {
   if(document.body.dataset.page === 'provider') initProvider();
   if(document.body.dataset.page === 'request') initRequest();
 });
-
-
