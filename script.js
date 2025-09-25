@@ -142,6 +142,20 @@ function initProvider(){
   `).join('');
   $('#list').innerHTML = rows || '<tr><td colspan="6">No registrations yet.</td></tr>';
 
+
+  //following is to change logo image with mobile
+  //logo image resposiveness
+    function updateImageSrc() {
+    const img = document.querySelector('#brim');
+    if (screen.width <= 495) {
+      img.src = 'Alogo.png';
+    }else{
+      img.src = 'anshu.png';
+    }
+  }
+  // Run on page load and window resize
+  window.addEventListener('load', updateImageSrc);
+  window.addEventListener('resize', updateImageSrc);
 }
 
 
@@ -340,6 +354,22 @@ function initRequest(){
     </tr>
   `).join('');
   $('#list').innerHTML = rows || '<tr><td colspan="6">No requests yet.</td></tr>';
+
+
+
+  //following is to change logo image with mobile
+  //logo image resposiveness
+    function updateImageSrc() {
+    const img = document.querySelector('#brim');
+    if (screen.width <= 495) {
+      img.src = 'Alogo.png';
+    }else{
+      img.src = 'anshu.png';
+    }
+  }
+  // Run on page load and window resize
+  window.addEventListener('load', updateImageSrc);
+  window.addEventListener('resize', updateImageSrc);
 
 }
 
