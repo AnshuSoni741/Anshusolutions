@@ -190,8 +190,8 @@ async function generate_new_reg_num_for_service_provider() {
 
 // ======================service provider form entry to google sheet====================== 
 function data_uploader_setting_for_provider_form(){
-  //  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzpFkssmDSqSLygbo5AR9bOQp2Zx2EQq5XvCJ4b-qek6_AwRfMeB3IleQOT2zOE7y5Gsg/exec";
-   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbx33_SKMVDwjIKxMCxaxQEovBOR2YyZDtabrQieJ--NM1drhsZbFl5wyzj_2kFx7uNr_g/exec";
+  //const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzpFkssmDSqSLygbo5AR9bOQp2Zx2EQq5XvCJ4b-qek6_AwRfMeB3IleQOT2zOE7y5Gsg/exec";
+   const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbyvd5lvdpSZEeIOnCqPnrCGmDsBoN4CnJlMR-1yVlQUJ1Dh9t2mOpDc01zWdEcBHzeqjA/exec";
 
     const providerForm = document.getElementById("providerForm");
     const statusDiv = document.getElementById("status");
@@ -225,9 +225,9 @@ function data_uploader_setting_for_provider_form(){
 
       
       // let new_request_Id = await generate_new_reg_num_for_service_provider();
-      let new_request_Id ="kkj/kjj/kkj/878" ;
+      let registration_id  ="kkj/kjj/kkj/878" ;
 
-      console.log("new id is : "+new_request_Id);
+      console.log("new id is : "+registration_id);
 
 
 
@@ -238,7 +238,7 @@ function data_uploader_setting_for_provider_form(){
           // headers: {
             //   "Content-Type": "application/json"
             // },
-            body: JSON.stringify({Registration_Id,name,phone,email,role,primaryService,experience,city,areas,idproof,skills,agree})
+            body: JSON.stringify({registration_id,name,phone,email,role,primaryService,experience,city,areas,idproof,skills,agree})
           });
           const result = await response.json();
           if (result.status === "success") {
@@ -255,11 +255,12 @@ function data_uploader_setting_for_provider_form(){
         }
         data.createdAt = new Date().toISOString();
         const id = DB.save('providers', data);
-        $('#status').innerHTML = `<div class="notice">Thank you! Your Service Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
+        // $('#status').innerHTML = `<div class="notice">Thank you! Your Service Provider ID is <b>#P${String(id).padStart(4,'0')}</b>. We will contact you soon.</div>`;
+        $('#status').innerHTML = `<div class="notice">Thank you! Your Service Provider ID is <b>#P${registration_id}</b>. We will contact you soon.</div>`;
         
            //to get message through what app
         // Format the WhatsApp message
-        let text = `I want to register with anshusolutions with following details:\n\nName: ${name}\nPhone: ${phone}\n Email: ${email}\nRole: ${role}\nPrimary service: ${primaryService}\n Experience (year): ${experience} ,\ncity ${city} \n Working Area: ${areas}\n skills : ${skills}`;
+        let text = `I want to register with anshusolutions with following details:\n\nregistration: ${registration_id}\nName: ${name}\nPhone: ${phone}\n Email: ${email}\nRole: ${role}\nPrimary service: ${primaryService}\n Experience (year): ${experience} ,\ncity ${city} \n Working Area: ${areas}\n skills : ${skills}`;
 
       // Encode message for URL
         let encodedText = encodeURIComponent(text);
