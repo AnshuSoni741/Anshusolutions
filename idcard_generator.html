@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ID Card Generator with WhatsApp</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .id-card {
+  width: 320px;
+  height: 220px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #1E3C72, #2A5298); /* Blue gradient */
+  color: #fff;
+  padding: 12px;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.id-card {
+  width: 320px;
+  height: 190px;
+  border-radius: 15px;
+  background: linear-gradient(134deg,#003852,#003852, #ffb700); /* Blue gradient */
+  color: #fff;
+  padding: 12px;
+  margin: auto;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+
+/* Header */
+.id-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+.id-header .logo {
+  width: 32px;
+  height: 32px;
+}
+.id-header h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  color: #ffcc00; /* orange accent */
+}
+
+/* Body */
+.id-body {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  /* background: rgba(255,255,255,0.1); */
+  background: rgba(255,255,255,0.3);
+  border-radius: 10px;
+  padding: 10px;
+}
+.id-body .profile {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #ffcc00; /* orange border */
+  object-fit: cover;
+}
+.id-body .details {
+  text-align: left;
+}
+.id-body .details h3 {
+  margin: 0 0 5px;
+  font-size: 16px;
+  color: #fff;
+}
+.id-body .details p {
+  margin: 2px 0;
+  font-size: 13px;
+  color: #f0f0f0;
+}
+
+/* Footer */
+.id-footer {
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  text-align: center;
+  font-size: 11px;
+  color: #fff3d2;
+  font-weight: bold;
+}
+
+    .download-buttons {
+      text-align: center;
+      margin-top: 20px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 6px;
+      background: #007BFF;
+      color: #fff;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h2>ID Card Generator</h2>
+  <form id="idForm">
+    <label>Name:</label>
+    <input type="text" id="name" required>
+    <label>ID Number:</label>
+    <input type="text" id="idNumber" required>
+    <label>Department:</label>
+    <input type="text" id="department" required>
+    <label>Contact:</label>
+    <input type="text" id="contact" required>
+    <label>Upload Photo:</label>
+    <input type="file" id="photo" accept="image/*" required>
+    <button type="submit">Generate ID Card</button>
+  </form>
+
+  <!-- <div class="id-card" id="idCard" style="display:none;">
+    <img id="cardPhoto" src="" alt="Photo">
+    <h3 id="cardName"></h3>
+    <p><b>ID:</b> <span id="cardId"></span></p>
+    <p><b>Dept:</b> <span id="cardDept"></span></p>
+    <p><b>Contact:</b> <span id="cardContact"></span></p>
+  </div> -->
+
+
+<!-- ID Card -->
+<div class="id-card" id="idCard" style="display:none;">
+  <div class="id-header">
+    <img src="./Alogo.png" alt="Company Logo" class="logo">
+    <h2>Anshu Solutions</h2>
+  </div>
+  <div class="id-body">
+    <img id="cardPhoto" src="" alt="Photo" class="profile">
+    <div class="details">
+      <h3 id="cardName"></h3>
+      <p><b>ID:</b> <span id="cardId"></span></p>
+      <p><b>Dept:</b> <span id="cardDept"></span></p>
+      <p><b>Contact:</b> <span id="cardContact"></span></p>
+    </div>
+  </div>
+  <div class="id-footer">
+    <p>www.anshusolutions.com</p>
+  </div>
+</div>
+
+
+  <div class="download-buttons" style="display:none;" id="downloadSection">
+    <button onclick="downloadPNG()">Download PNG</button>
+    <button onclick="downloadPDF()">Download PDF</button>
+    <button onclick="downloadDOC()">Download DOCX</button>
+    <button onclick="sendToWhatsApp()">Send to WhatsApp</button>
+  </div>
+
+  <!-- Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.1.0/build/index.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/evidenceprime/html-docx-js/dist/html-docx.js"></script>
+
+
+
+  <script>
+    const form = document.getElementById("idForm");
+    const idCard = document.getElementById("idCard");
+    const downloadSection = document.getElementById("downloadSection");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      document.getElementById("cardName").textContent = document.getElementById("name").value;
+      document.getElementById("cardId").textContent = document.getElementById("idNumber").value;
+      document.getElementById("cardDept").textContent = document.getElementById("department").value;
+      document.getElementById("cardContact").textContent = document.getElementById("contact").value;
+
+      const file = document.getElementById("photo").files[0];
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        document.getElementById("cardPhoto").src = e.target.result;
+      }
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+
+      idCard.style.display = "block";
+      downloadSection.style.display = "block";
+    });
+
+    // Download PNG
+    function downloadPNG(callback) {
+      html2canvas(idCard).then(canvas => {
+        const dataURL = canvas.toDataURL("image/png");
+        const link = document.createElement("a");
+        link.download = "id_card.png";
+        link.href = dataURL;
+        link.click();
+
+        if (callback) callback(dataURL);
+      });
+    }
+
+    // Download PDF
+    async function downloadPDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      const canvas = await html2canvas(idCard);
+      const imgData = canvas.toDataURL("image/png");
+      doc.addImage(imgData, "PNG", 20, 20, 170, 100);
+      doc.save("id_card.pdf");
+    }
+
+function downloadDOC() {
+  const content = `
+    <div style="text-align:center;">
+      <h2>ID Card</h2>
+      <p><b>Name:</b> ${document.getElementById("cardName").textContent}</p>
+      <p><b>ID:</b> ${document.getElementById("cardId").textContent}</p>
+      <p><b>Department:</b> ${document.getElementById("cardDept").textContent}</p>
+      <p><b>Contact:</b> ${document.getElementById("cardContact").textContent}</p>
+    </div>`;
+
+  // ✅ with correct standalone build
+  const converted = htmlDocx.asBlob(content);
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(converted);
+  link.download = "id_card.docx";
+  link.click();
+}
+
+    // Send to WhatsApp
+    function sendToWhatsApp() {
+      // First download the PNG
+      downloadPNG((imgData) => {
+        // Replace with your WhatsApp number (with country code, no +)
+        const phoneNumber = "919876543210";
+        const name = document.getElementById("cardName").textContent;
+        const id = document.getElementById("cardId").textContent;
+
+        const message = `Hello, here is the ID card for ${name} (ID: ${id}).\nPlease attach the downloaded image.`;
+        const waUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+
+        window.open(waUrl, "_blank");
+      });
+    }
+  </script>
+</body>
+</html>
