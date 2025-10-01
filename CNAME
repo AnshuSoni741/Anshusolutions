@@ -1,1 +1,63 @@
 anshusolutions.linkpc.net
+
+
+
+<!-- place this on your landing page (e.g., index.html or the page that should check password) -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Password Gate</title>
+  <style>
+    /* tiny styling */
+    .pw-wrap { max-width:360px; margin:80px auto; text-align:center; font-family: Arial, sans-serif; }
+    input[type="password"]{ padding:10px; width:100%; box-sizing:border-box; margin-bottom:10px; }
+    button{ padding:10px 16px; cursor:pointer; }
+    .msg { margin-top:12px; color:#c00; }
+  </style>
+</head>
+<body>
+  <div class="pw-wrap">
+    <h2>Enter Password to Open iCard Generator</h2>
+    <input id="passwordInput" type="password" placeholder="Password" />
+    <br/>
+    <button onclick="checkPasswordAndOpen()">Open iCard Generator</button>
+    <div id="msg" class="msg" aria-live="polite"></div>
+  </div>
+
+  <script>
+    // CHANGE THIS to your chosen password (client-side visibility)
+    const EXPECTED_PASS = "mySecret123";
+
+    // Function to check password and open icardgenerator.html if correct
+    function checkPasswordAndOpen() {
+      const msgEl = document.getElementById('msg');
+      msgEl.textContent = ''; // clear previous message
+
+      const pw = document.getElementById('passwordInput').value;
+      // simple validation
+      if (!pw) {
+        msgEl.textContent = 'Please enter the password.';
+        return;
+      }
+
+      // check (case-sensitive)
+      if (pw === EXPECTED_PASS) {
+        // successful — redirect to icardgenerator.html in same folder
+        window.location.href = 'icardgenerator.html';
+      } else {
+        // failed
+        msgEl.textContent = 'Incorrect password. Try again.';
+        // optional: clear input
+        document.getElementById('passwordInput').value = '';
+      }
+    }
+
+    // Optional: allow Enter key to submit
+    document.getElementById('passwordInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') checkPasswordAndOpen();
+    });
+  </script>
+</body>
+</html>
