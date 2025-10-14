@@ -10,6 +10,58 @@
     .lang-btn {
       background: #f59e0b;
     }
+
+
+    
+    button{
+       background:linear-gradient(135deg,var(--brand),#2563eb);
+      color:white;border:0;border-radius:14px;padding:10px 16px;font-weight:700;
+      box-shadow:0 6px 16px rgba(37,99,235,0.35); cursor:pointer; transition:.2s transform,.3s box-shadow;
+
+    }
+
+    button:hover {
+      background:red;
+    }
+
+
+        /* Popup overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay.show {
+      display: flex;
+    }
+
+    .popup {
+      background: blue;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+      width: 280px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    input[type="password"] {
+      width: 90%;
+      padding: 8px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .error {
+      color: red;
+      margin-top: 8px;
+      display: none;
+    }
+
   </style>
 </head>
 <body data-page="home">
@@ -77,6 +129,7 @@
         <img src="/anshusolusion.png" alt="" style="height:28px"><span class="name" data-en="ANSHU SOLUTIONS" data-hi="अंशु सॉल्यूशन्स">ANSHU SOLUTIONS</span>
       </div>
       <p class="subtitle" data-en="Reliable multi-service provider for homes, offices and industries." data-hi="घर, ऑफिस और उद्योगों के लिए विश्वसनीय मल्टी-सर्विस प्रदाता।">Reliable multi-service provider for homes, offices and industries.</p>
+       <div><a class="btn secondary" target="_blank" id="openPopup">Generate I Card (Admin Only)</a></div>
     </div>
     <div>
       <h4 data-en="Company" data-hi="कंपनी">Company</h4>
@@ -98,6 +151,55 @@
   <div class="container" style="margin-top:18px;color:#6b7280">© <span id="yr"></span> <span data-en="ANSHU SOLUTIONS" data-hi="अंशु सॉल्यूशन्स">ANSHU SOLUTIONS</span></div>
 </footer>
 
+
+  <!-- Popup -->
+  <div class="overlay" id="overlay">
+    <div class="popup">
+      <h3>Enter Password to Generate I-Card<br>(Admin Only)</h3>
+      <input type="password" id="passwordInput" placeholder="Password">
+      <div class="error" id="errorMsg">Incorrect Password!</div>
+      <br>
+      <br>
+      <div>
+      <button id="submitBtn" >Submit</button>
+      <button id="cancelBtn" style="background:orange;">Cancel</button>
+      </div>  
+    </div>
+  </div>
+
+
+  <script>
+    const overlay = document.getElementById('overlay');
+    const openPopup = document.getElementById('openPopup');
+    const submitBtn = document.getElementById('submitBtn');
+    const cancelBtn = document.getElementById('cancelBtn');
+    const passwordInput = document.getElementById('passwordInput');
+    const errorMsg = document.getElementById('errorMsg');
+
+    const PASSWORD = "AnshuICard"; // <-- change this if needed
+
+    openPopup.addEventListener('click', () => {
+      overlay.classList.add('show');
+      passwordInput.value = '';
+      errorMsg.style.display = 'none';
+      passwordInput.focus();
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      overlay.classList.remove('show');
+    });
+
+    submitBtn.addEventListener('click', () => {
+      if (passwordInput.value === PASSWORD) {
+        window.open("idcard_generator_from_data_fetch.html", "_blank");
+        overlay.classList.remove('show');
+      } else {
+        errorMsg.style.display = 'block';
+      }
+    });
+  </script>
+
+  
 <script src="script.js"></script>
 <script>
 document.getElementById('yr').textContent = new Date().getFullYear();
@@ -113,4 +215,5 @@ function toggleLanguage() {
 </script>
 </body>
 </html>
+
 
