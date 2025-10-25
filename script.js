@@ -247,7 +247,7 @@ function data_uploader_setting_for_provider_form(){
       const skills = document.getElementById("skills").value.trim();
       const agree = document.getElementById("agree").value.trim();
 
-      if (!data.name | !data.phone | !data.email | !data.role | !data.primaryService | !data.experience | !data.city | !data.areas| !data.idproof | !data.skills | !data.agree) {
+      if (!data.name | !data.phone | !data.email | !data.role | !data.primaryService | !data.experience | !data.city | !data.areas| idproof | !data.skills | !data.agree) {
         statusDiv.textContent = "Please fill in all fields.";
         statusDiv.classList.add("error");
         return;
